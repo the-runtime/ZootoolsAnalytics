@@ -1,14 +1,15 @@
 const {Sequelize,Model, DataType, DataTypes} = require("sequelize")
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: 'database.sqlite'
-})
+const sequelize = new Sequelize(process.env.POSTGRES_URL)
+// const sequelize = new Sequelize({
+//     dialect: 'sqlite',
+//     storage: 'database.sqlite'
+// })
 
 class minuteData extends Model {}
 
 minuteData.init({
     totalOpens: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     time: {
@@ -17,11 +18,11 @@ minuteData.init({
         primaryKey: true
     },
 
-    open_by_countries: { //more details can be put using enums for country codes
+    open_by_countries: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    open_by_devices: { // moore details can be put using enum for device code
+    open_by_devices: {
         type: DataTypes.STRING,
         allowNull: false
     }

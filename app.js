@@ -2,12 +2,10 @@ const express = require('express')
 const table = require('./controller/table')
 const {processEvent} = require("./controller/processEvent");
 const {minuteData} = require("./model/minuteStore");
-const {factoryTable} = require("./controller/table");
-
 const  app = express()
 let userTable
 
-//problem might happen if time in reaching next minute is very less
+//problem might happen if delta time in reaching next minute is very less
 table.tableFactory()
     .then(retuserTable => {
     userTable = retuserTable

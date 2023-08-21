@@ -1,4 +1,3 @@
-// const {getDB} = require("../database/database");
 const {minuteData, sequelize} = require("../model/minuteStore");
 const {getLastState} = require("./recoverState");
 
