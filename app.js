@@ -51,4 +51,14 @@ app.get('/metrics',async (req, res) => {
     res.json({open_by_countries: countryMap, open_by_devices: deviceMap, timeseries: timeData})
 })
 
+
+app.get('/health',(req, res) => {
+    if (userTable != undefined){
+        res.json({message:"server is ready"})
+        return
+    }
+    res.json({message:"server is not ready"})
+})
+
+
 app.listen(port)
