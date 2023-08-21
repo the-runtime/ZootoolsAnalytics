@@ -1,0 +1,2 @@
+Add am/pm and format date in table Map
+add fault tolerance for first request in /metrics
