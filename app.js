@@ -2,10 +2,18 @@ const express = require('express')
 const table = require('./controller/table')
 const {processEvent} = require("./controller/processEvent");
 const {minuteData} = require("./model/minuteStore");
+const {factoryTable} = require("./controller/table");
 
 const  app = express()
+let userTable
 
-const userTable = new table.userTable()
+//problem might happen if time in reaching next minute is very less
+table.tableFactory()
+    .then(retuserTable => {
+    userTable = retuserTable
+    })
+
+
 const port = 8000
 
 const currentTime = new Date()
@@ -32,7 +40,6 @@ app.post('/events', (req, res) => {
         const output = processEvent(jsonData)
         userTable.gotEvent(output.country,output.device)
         res.json({message: "message accepted"})
-        console.log(userTable)
     } catch (err){
         console.log(err.message)
         res.json({message: "problem with payload"})
@@ -40,10 +47,7 @@ app.post('/events', (req, res) => {
 })
 
 app.get('/metrics',async (req, res) => {
-
-    //add check if table exists or not to avoid shutting down of server
     const timeData = await minuteData.findAll({attributes:['totalOpens','time']})
-    console.log(timeData, 'type of timeData',typeof(timeData))
     const deviceMap = Object.fromEntries(userTable.table.get('device'))
     const countryMap = Object.fromEntries(userTable.table.get('country'))
     res.json({open_by_countries: countryMap, open_by_devices: deviceMap, timeseries: timeData})

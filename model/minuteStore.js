@@ -30,9 +30,10 @@ minuteData.init({
     modelName: 'minute_store'
 })
 
-sequelize.sync()
-    .then(() => {
-        console.log("synchronisation done")
-    })
+// sequelize.sync()
+//     .then(() => {
+//         console.log("synchronisation done")
+//     })
 module.exports.minuteData = minuteData
+module.exports.sequelize = sequelize
 
